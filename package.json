@@ -1,11 +1,20 @@
 {
   "name": "wait-transaction",
   "description": "A promisified web3.eth.sendTransaction that waits for confirmation ",
+  "scripts": {
+    "build": "babel src -d lib",
+  },
   "private": true,
   "author": {
     "name": "Raine Revere",
     "email": "raineorshine@gmail.com",
     "url": "https://github.com/raineorshine"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
