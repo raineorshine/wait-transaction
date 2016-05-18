@@ -1,60 +1,58 @@
-Pudding.synchronizeFunction = function(fn) {
-  var self = this;
-  var web3 = Pudding.getWeb3();
-  return function() {
-    var args = Array.prototype.slice.call(arguments);
-    var tx_params = {};
-    var last_arg = args[args.length - 1];
+// import { merge } from 'ramda'
+const web3 = require('web3')
 
-    // It's only tx_params if it's an object and not a BigNumber.
-    if (Pudding.is_object(last_arg) && last_arg instanceof Pudding.BigNumber == false) {
-      tx_params = args.pop();
-    }
+export default function (fn) {
+  var self = this
+  return function (...args) {
+    var txParams = {}
 
-    tx_params = Pudding.merge(Pudding.class_defaults, self.class_defaults, tx_params);
+    // It's only txParams if it's an object and not a BigNumber.
+    // var lastArg = args[args.length - 1]
+    // if (Pudding.is_object(lastArg) && lastArg instanceof Pudding.BigNumber == false) {
+    //   txParams = args.pop()
+    // }
+    txParams = args.pop()
 
-    return new Promise(function(accept, reject) {
+    // txParams = merge(Pudding.class_defaults, self.class_defaults, txParams)
 
-      var callback = function(error, tx) {
-        var interval = null;
-        var max_attempts = 240;
-        var attempts = 0;
+    return new Promise(function (resolve, reject) {
+      var callback = function (error, tx) {
+        var interval = null
+        var maxAttempts = 240
+        var attempts = 0
 
-        if (error != null) {
-          reject(error);
-          return;
+        if (error) {
+          reject(error)
+          return
         }
 
-        var interval;
-
-        var make_attempt = function() {
-          //console.log "Interval check //{attempts}..."
-          web3.eth.getTransaction(tx, function(e, tx_info) {
+        var makeAttempt = function () {
+          web3.eth.getTransaction(tx, function (e, txInfo) {
             // If there's an error ignore it.
-            if (e != null) {
-              return;
+            if (e) {
+              return
             }
 
-            if (tx_info.blockHash != null && tx_info.blockHash != 0x0) {
-              clearInterval(interval);
-              accept(tx);
+            if (txInfo.blockHash && txInfo.blockHash) {
+              clearInterval(interval)
+              resolve(tx)
             }
 
-            if (attempts >= max_attempts) {
-              clearInterval(interval);
-              reject(new Error("Transaction " + tx + " wasn't processed in " + attempts + " attempts!"));
+            if (attempts >= maxAttempts) {
+              clearInterval(interval)
+              reject(new Error('Transaction ' + tx + ' wasn\'t processed in ' + attempts + ' attempts!'))
             }
 
-            attempts += 1;
-          });
-        };
+            attempts += 1
+          })
+        }
 
-        interval = setInterval(make_attempt, 1000);
-        make_attempt();
-      };
+        interval = setInterval(makeAttempt, 1000)
+        makeAttempt()
+      }
 
-      args.push(tx_params, callback);
-      fn.apply(self, args);
-    });
-  };
-};
+      args.push(txParams, callback)
+      fn.apply(self, args)
+    })
+  }
+}

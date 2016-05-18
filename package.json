@@ -2,7 +2,8 @@
   "name": "wait-transaction",
   "description": "A promisified web3.eth.sendTransaction that waits for confirmation ",
   "scripts": {
-    "build": "babel src -d lib",
+    "lint": "standard \"test/**/*.js\" \"src/**/*.js\"",
+    "build": "babel src -d lib"
   },
   "private": true,
   "author": {
@@ -15,6 +16,11 @@
     "babel-cli": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "standard": "^7.1.0"
+  },
+  "dependencies": {
+    "ramda": "^0.21.0",
+    "web3": "^0.16.0"
   }
 }
