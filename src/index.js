@@ -1,8 +1,4 @@
-// import { merge } from 'ramda'
-const web3 = require('web3')
-
-export default function (fn) {
-  var self = this
+export default function (web3) {
   return function (...args) {
     var txParams = {}
 
@@ -52,7 +48,7 @@ export default function (fn) {
       }
 
       args.push(txParams, callback)
-      fn.apply(self, args)
+      web3.eth.sendTransaction(...args)
     })
   }
 }
