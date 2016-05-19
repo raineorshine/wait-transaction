@@ -8,10 +8,7 @@ module.exports = (web3, options = {}) => {
         let interval
         let attempts = 0
 
-        if (error) {
-          reject(error)
-          return
-        }
+        if (error) { return reject(error) }
 
         const makeAttempt = () => {
           web3.eth.getTransaction(tx, (e, { blockHash }) => {
