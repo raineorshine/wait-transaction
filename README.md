@@ -18,6 +18,13 @@ waitTransaction({ from: web3.eth.accounts[0], to: emptyAccount.address, value: 1
   .then(balance => assert.equal(1000, balance))
 ```
 
+Options:
+
+require('wait-transaction')(web, {
+  maxAttempts: 240 // number of attempts to check that the transaction was mined before giving up
+  timeInterval: 1000 // number of milliseconds between attempts
+})
+
 ## License
 
 MIT
