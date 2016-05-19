@@ -10,15 +10,12 @@ $ npm install --save wait-transaction
 ## Usage
 
 ```js
-import waitTransaction from 'wait-transaction'
-const wait = waitTransaction(web3)
+// pass a valid web3 instance that the providers set
+const waitTransaction = require('wait-transaction')(web3)
 
-it('should add funds sent by the seller to sellerFunds', () => {
-  const contract = MyContract.deployed()
-  return wait({ from: web3.eth.accounts[0], to: contract.address, value: 1000 })
-    .then(() => web3.eth.getBalance(contract.address))
-    .then(balance => assert.equal(1000, balance))
-})
+waitTransaction({ from: web3.eth.accounts[0], to: emptyAccount.address, value: 1000 })
+  .then(() => web3.eth.getBalance(emptyAccount.address).valueOf())
+  .then(balance => assert.equal(1000, balance))
 ```
 
 ## License
