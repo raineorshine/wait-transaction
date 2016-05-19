@@ -1,3 +1,4 @@
+// Based on https://github.com/ConsenSys/ether-pudding/blob/f3b7e5921a8884e869f25cc254a6c4d6a2d8c7e9/index.js#L240
 module.exports = (web3, options = {}) => {
   options.maxAttempts = options.maxAttempts || 240
   options.timeInterval = options.timeInterval || 1000
