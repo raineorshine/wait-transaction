@@ -1,5 +1,5 @@
 # waitTransaction
-A promisified web3.eth.sendTransaction that waits for confirmation
+A promisified web3.eth.sendTransaction that waits for confirmation.
 
 ## Install
 
@@ -20,10 +20,12 @@ waitTransaction({ from: web3.eth.accounts[0], to: emptyAccount.address, value: 1
 
 Options:
 
+```js
 require('wait-transaction')(web, {
   maxAttempts: 240 // number of attempts to check that the transaction was mined before giving up
   timeInterval: 1000 // number of milliseconds between attempts
 })
+```
 
 ## License
 
