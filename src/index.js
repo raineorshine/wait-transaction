@@ -1,4 +1,4 @@
-export default function (web3, options = {}) {
+module.exports = function (web3, options = {}) {
   options.maxAttempts = options.maxAttempts || 240
   options.timeInterval = options.timeInterval || 1000
 
