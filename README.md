@@ -1,4 +1,4 @@
-# waitTransaction
+# wait-transaction
 A promisified web3.eth.sendTransaction that waits for confirmation.
 
 ## Install
