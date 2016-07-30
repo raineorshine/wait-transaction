@@ -1,6 +1,6 @@
 {
   "name": "wait-transaction",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A promisified web3.eth.sendTransaction that waits for confirmation.",
   "scripts": {
     "lint": "standard \"test.js\" \"src/**/*.js\"",
