@@ -5,21 +5,31 @@ module.exports = (web3, options = {}) => {
 
   return (...args) => {
     return new Promise((resolve, reject) => {
-      const callback = (error, tx) => {
+      const callback = (errSend, tx) => {
         let interval
-        let attempts = 0
 
-        if (error) { return reject(error) }
+        if (errSend) {
+          clearInterval(interval)
+          return reject(errSend)
+        }
 
         const makeAttempt = () => {
-          web3.eth.getTransaction(tx, (e, { blockHash }) => {
-            if (e) { return }
+          let attempts = 0
 
-            if (blockHash) {
+          web3.eth.getTransaction(tx, (errTx, results) => {
+            // error
+            if (errTx) {
+              clearInterval(interval)
+              return reject(errTx)
+            }
+
+            // resolved
+            if (results && results.blockHash) {
               clearInterval(interval)
               resolve(tx)
             }
 
+            // exceeded max attempts
             if (attempts >= options.maxAttempts) {
               clearInterval(interval)
               reject(new Error('Transaction ' + tx + ' wasn\'t processed in ' + attempts + ' attempts!'))
