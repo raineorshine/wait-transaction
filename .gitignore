@@ -1,2 +1,3 @@
+.node-xmlhttprequest-*
 npm-debug.log*
 node_modules
